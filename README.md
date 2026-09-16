@@ -1,8 +1,30 @@
 # openwrt-banip-country
 Generates IPv4 and IPv6 data sources grouped by country based on Loyalsoldier/geoip.
 
+## 📦 Data Retrieval
 
-# country data
+This project automatically synchronizes with upstream sources daily to generate the latest plain-text lists of IPv4/IPv6 network segments. Since access to the GitHub Raw domain can be unstable in certain network environments, **using the jsDelivr CDN link for retrieval is strongly recommended**.
+
+### 1. Link Format
+
+The data is categorized into "include" lists (IPs for a specific country) and "exclude" lists (all IPs *except* those for a specific country).
+
+*   **CDN-accelerated link (Recommended):** `https://cdn.jsdelivr.net/gh/smallprogram/openwrt-banip-country@main/<directory>/<filename>`
+*   **GitHub native link:** `https://raw.githubusercontent.com/smallprogram/openwrt-banip-country/main/<directory>/<filename>`
+
+### 2. Examples of Direct Links to Common Data Sources
+
+**🎯 Get all IPs for a specific country (using `cn` as an example):**
+*   **IPv4:** `https://cdn.jsdelivr.net/gh/smallprogram/openwrt-banip-country@main/country_data/cn_v4.txt`
+*   **IPv6:** `https://cdn.jsdelivr.net/gh/smallprogram/openwrt-banip-country@main/country_data/cn_v6.txt`
+
+**🛡️ Get all IPs excluding a specific country (using `not_cn` as an example):**
+*   **IPv4:** `https://cdn.jsdelivr.net/gh/smallprogram/openwrt-banip-country@main/not_country_data/not_cn_v4.txt`
+*   **IPv6:** `https://cdn.jsdelivr.net/gh/smallprogram/openwrt-banip-country@main/not_country_data/not_cn_v6.txt`
+
+> **💡 Tip:** Simply replace `cn` in the links above with any standard country/region code (in lowercase, e.g., `us`, `hk`, `tw`, `sg`, etc.) to retrieve the corresponding data.
+
+## country data
 geoname_id|locale_code|continent_code|continent_name|country_iso_code|country_name|is_in_european_union\
 -|-|-|-|-|-|-
 49518|zh-CN|AF|非洲|RW|卢旺达|0
