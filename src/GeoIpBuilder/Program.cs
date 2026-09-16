@@ -13,8 +13,24 @@ string rootDir = Path.Combine(Directory.GetCurrentDirectory(), "..", "..");
 string countryDir = Path.Combine(rootDir, "country_data");
 string notCountryDir = Path.Combine(rootDir, "not_country_data");
 
-Directory.CreateDirectory(countryDir);
-Directory.CreateDirectory(notCountryDir);
+// 本地函数：确保目录存在并清空旧的 txt 文件
+void EnsureAndClearDirectory(string path)
+{
+    if (Directory.Exists(path))
+    {
+        foreach (var file in Directory.GetFiles(path, "*.txt"))
+        {
+            File.Delete(file);
+        }
+    }
+    else
+    {
+        Directory.CreateDirectory(path);
+    }
+}
+Console.WriteLine("Cleaning up old data...");
+EnsureAndClearDirectory(countryDir);
+EnsureAndClearDirectory(notCountryDir);
 
 using var client = new HttpClient();
 client.DefaultRequestHeaders.Add("User-Agent", "OpenWrt-BanIP-Builder/1.0");
