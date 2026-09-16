@@ -1,3 +1,5 @@
+![Visitors](https://api.visitorbadge.io/api/combined?path=https%3A%2F%2Fgithub.com%2Fsmallprogram%2Fopenwrt-banip-country&countColor=%23697689)
+
 # openwrt-banip-country
 Generates IPv4 and IPv6 data sources grouped by country based on Loyalsoldier/geoip.
 
