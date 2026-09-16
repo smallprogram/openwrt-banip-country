@@ -1,0 +1,55 @@
+#
+# Copyright (c) 2026 SMALLPROGRAM <https://github.com/smallprogram/openwrt-banip-country>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
+# https://github.com/smallprogram/openwrt-banip-country
+# Description: build country data
+#
+
+name: Build Country Data (.NET)
+
+on:
+  schedule:
+    # 每天北京时间早上 6 点 (UTC 时间 22:00) 运行一次
+    - cron: '0 22 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: latest
+          dotnet-channel: LTS
+
+      - name: Run C# Builder Script
+        run: |
+          # 直接进入 src 目录运行项目
+          cd src/GeoIpBuilder
+          dotnet run
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "smallprogramzhusir@gmail.com"
+          git config --local user.name "David Mandy"
+          
+          git add country_data/
+          git add not_country_data/
+          
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-update GeoIP data: $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+            git push
+          fi
